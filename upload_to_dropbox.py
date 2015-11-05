@@ -53,7 +53,11 @@ def main():
     remote_path = "./%s" % filename
     with open(filepath, "rb") as fp:
         cli = make_client()
-        cli.file_delete(remote_path)
+        try:
+            cli.file_delete(remote_path)
+        except Exception:
+            pass
+
         cli.put_file(remote_path, fp)
 
 if __name__ == "__main__":
