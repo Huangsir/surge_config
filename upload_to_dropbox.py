@@ -14,7 +14,6 @@ def do_login(app_key, app_secret, code):
     flow = client.DropboxOAuth2FlowNoRedirect(app_key, app_secret)
     flow.start()
     try:
-        print app_key, app_secret, code
         token, _ = flow.finish(code.strip())
         return token
     except Exception as e:
@@ -30,7 +29,6 @@ def make_token(flush=False):
 
     if flush or not token:
         token = do_login(data.get("app_key"), data.get("app_secret"), data.get("code"))
-        print token
         data["token"] = token
         with open("dropbox.txt", "w") as fp:
             fp.write(json.dumps(data))
