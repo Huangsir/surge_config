@@ -50,15 +50,14 @@ def make_client():
 def main():
     filepath = sys.argv[1]
     filename = path.basename(filepath)
-    remote_path = "./%s" % filename
     with open(filepath, "rb") as fp:
         cli = make_client()
         try:
-            cli.file_delete(remote_path)
+            cli.file_delete(filename)
         except Exception:
             pass
 
-        cli.put_file(remote_path, fp)
+        cli.put_file(filename, fp)
 
 if __name__ == "__main__":
     main()
