@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import requests.packages.urllib3
+requests.packages.urllib3.disable_warnings()
+
 import requests
 
 
