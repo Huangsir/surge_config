@@ -26,13 +26,30 @@ def parse_ruleset(url):
         if not line:
             continue
 
-        if line.startswith("//"):
+        if line.startswith("//") or line.startswith("#"):
             continue
 
-        if "REJECT" in line or "DIRECT" in line or "FINAL" in line:
+        if line.endswith("REJECT") or line.endswith("DIRECT"):
             continue
 
-        ruleset.add(line.replace(" ", ""))
+        if line.startswith("FINAL"):
+            continue
+
+        tmparr = line.replace(" ", "").split(",")
+        if len(tmparr) < 3:
+            continue
+
+        rule_type = tmparr[0]
+        host = tmparr[1]
+        rule = []
+
+        if line.startswith("DOMAIN"):
+            rule = [rule_type, host, "Proxy", "force-remote-dns"]
+        elif line.startswith("GEOIP") or line.startswith("IP-CIDR"):
+            rule = [rule_type, host, "Proxy", "no-resolve"]
+
+        if rule:
+            ruleset.add(",".join(rule))
 
     return ruleset
 
