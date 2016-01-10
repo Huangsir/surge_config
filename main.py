@@ -37,6 +37,9 @@ def parse_ruleset(url):
 
         if line.startswith("FINAL"):
             continue
+        
+        if "apple.com" in line or "itunes.com" in line:
+            continue
 
         tmparr = line.replace(" ", "").split(",")
         if len(tmparr) < 3:
@@ -61,9 +64,9 @@ ruleset = set().union(
     parse_ruleset("http://surge.pm/main.conf")
 ).union(
     parse_ruleset("https://gist.githubusercontent.com/jason5ng32/648597df6ca7da5aeb41/raw/e9a0024b4cb7425fef55d941b389a08745a17a52/surge_main.conf")
-).union(
-    parse_ruleset("https://gist.githubusercontent.com/Huangsir/ebe23f97448709351c26/raw/6346434903b4e70e16e7bfef62a614a424bdad39/surge.conf")
-)
+)#.union(
+    #parse_ruleset("https://gist.githubusercontent.com/Huangsir/ebe23f97448709351c26/raw/6346434903b4e70e16e7bfef62a614a424bdad39/surge.conf")
+#)
 rules = sorted(list(ruleset))
 
 content = ""
